@@ -8,7 +8,10 @@ class Player {
         this.hh = size[1];
         this.color = color;
         this.state = state;
+
+
         this.visible = true;
+        this.canUpdate = true
 
         //Main Sprite
         this.sprite = createSprite(this.xx, this.yy, this.ww, this.hh);
@@ -26,6 +29,9 @@ class Player {
     }
 
     Update() {
-        
+        if (this.canUpdate) {
+
+            
+        }
     }
 }
