@@ -30,8 +30,17 @@ class Player {
 
     Update() {
         if (this.canUpdate) {
-
-            
+            this[this.state]();
         }
+    }
+
+    // States 
+
+    IdleState() {
+        
+    }
+
+    JumpState() {
+
     }
 }

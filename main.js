@@ -13,7 +13,8 @@ function setup() {
     playerLayer = new objLayer();
 
     //Creating the actual player
-    player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
+    player = new Player(playerLayer, [50, 50], [20, 20], "JumpState");
+    this.stare = "IdleState";
     //player.visible = false;
     player.canUpdate =true;
 
