@@ -1,23 +1,21 @@
-
-const backgroundColor = (50)
+const DEBUG = true;
+const backgroundColor = 50;
 
 let playerLayer;
 let player;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight)
-    
+    createCanvas(windowWidth, windowHeight);
 
     // *** layers ***
     //Creating the main player layer
     playerLayer = new objLayer();
 
     //Creating the actual player
-    player = new Player(playerLayer, [50, 50], [20, 20], "JumpState");
-    this.stare = "IdleState";
+    player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
+    this.state = "IdleState";
     //player.visible = false;
-    player.canUpdate =true;
-
+    player.canUpdate = true;
 }
 
 function draw() {
@@ -26,26 +24,26 @@ function draw() {
     Update(); //Game Logic
     LateUpdate(); //Late updates, after movement and such
     Render(); //Render the actual things
-    
+
     // playerLayer.Draw();
 }
 
-const FixedUpdate = () => {
-    
-}
+const FixedUpdate = () => {};
 
 const Update = () => {
-    playerLayer.Update()
-}
+    playerLayer.Update();
+};
 
-const LateUpdate = () => {
-
-}
+const LateUpdate = () => {};
 
 const Render = () => {
     playerLayer.Draw();
-}
+};
 
 const StaticRender = () => {
     background(backgroundColor);
+};
+
+function keyPressed() {
+    playerLayer.KeyPressed(keyCode);
 }

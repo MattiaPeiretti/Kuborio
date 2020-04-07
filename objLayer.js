@@ -14,4 +14,11 @@ class objLayer{
             this.childrenObjs[i].Update();
         }
     }
+
+    KeyPressed(KeyCode) {
+        for (var i = 0; i < this.childrenObjs.length; i++) {
+            this.childrenObjs[i].KeyPressed(KeyCode);
+        }
+    }
 }
+
