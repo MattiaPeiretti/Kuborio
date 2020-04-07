@@ -51,16 +51,16 @@ class Player {
     // States
 
     IdleState() {
-        console.log(`Player State: ${this.state}`);
+        DEBUG && console.log(`Player State: ${this.state}`);
         this.sprite.setSpeed(0, 0);
     }
 
     JumpState() {
-        console.log(`Player State: ${this.state}`);
+        DEBUG && console.log(`Player State: ${this.state}`);
     }
 
     MoveState() {
-        console.log(`Player State: ${this.state}`);
+        DEBUG && console.log(`Player State: ${this.state}`);
     }
 
     // --------
@@ -83,6 +83,6 @@ class Player {
             default:
                 this.sprite.setSpeed(0, 0);
         }
-        console.log(`Key Pressed: ${KeyCode}`);
+        DEBUG && console.log(`Key Pressed: ${KeyCode}`);
     }
 }
