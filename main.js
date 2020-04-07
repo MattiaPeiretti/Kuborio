@@ -8,12 +8,13 @@ function setup() {
     createCanvas(windowWidth, windowHeight)
     background(backgroundColor);
 
-    //layers
+    // *** layers ***
+    //Creating the main player layer
     playerLayer = new objLayer();
 
-    player = new Player("IdleState", [50, 50], [20, 20])
-    playerLayer.childrenObjs.push(player);
-    
+    //Creating the actual player
+    player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
+
 }
 
 function draw() {
