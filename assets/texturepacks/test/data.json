@@ -1,0 +1,12 @@
+{
+    "info" : {
+        "name" : "TestTexturePack"
+    },
+
+    "assets": {
+        "Stone" : 0,
+        "Dirt" : 1,
+        "Grass" : 2,
+        "Sand" : 3
+    }
+}

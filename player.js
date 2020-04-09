@@ -1,18 +1,18 @@
 // Directions
-const forward = 270;
-const left = 180;
-const backwards = 90;
-const right = 0;
+const FORWARD = 270;
+const LEFT = 180;
+const BACKWARDS = 90;
+const RIGHT = 0;
 
 //Keys
-const W = 87;
-const A = 65;
-const S = 83;
-const D = 68;
+const W_KEY = 87;
+const A_KEY = 65;
+const S_KEY = 83;
+const D_KEY = 68;
 
 class Player {
     constructor(objLayer, pos, size, state) {
-        this.playerSpeed = 3;
+        this.playerSpeed = 30;
 
         //Instance variables
         this.xx = pos[0];
@@ -68,17 +68,17 @@ class Player {
     KeyPressed(KeyCode) {
         this.state = "MoveState";
         switch (KeyCode) {
-            case W:
-                this.sprite.setSpeed(this.playerSpeed, forward);
+            case W_KEY:
+                this.sprite.setSpeed(this.playerSpeed, FORWARD);
                 break;
-            case A:
-                this.sprite.setSpeed(this.playerSpeed, left);
+            case A_KEY:
+                this.sprite.setSpeed(this.playerSpeed, LEFT);
                 break;
-            case S:
-                this.sprite.setSpeed(this.playerSpeed, backwards);
+            case S_KEY:
+                this.sprite.setSpeed(this.playerSpeed, BACKWARDS);
                 break;
-            case D:
-                this.sprite.setSpeed(this.playerSpeed, right);
+            case D_KEY:
+                this.sprite.setSpeed(this.playerSpeed, RIGHT);
                 break;
             default:
                 this.sprite.setSpeed(0, 0);
