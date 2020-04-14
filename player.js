@@ -12,7 +12,7 @@ const D_KEY = 68;
 
 class Player {
     constructor(objLayer, pos, size, state) {
-        this.playerSpeed = 30;
+        this.playerSpeed = 5;
 
         //Instance variables
         this.xx = pos[0];
@@ -21,9 +21,12 @@ class Player {
         this.hh = size[1];
         this.color = color;
         this.state = state;
+        this.directionX = 1;
+        this.directionY = 1;
 
         this.visible = true;
         this.canUpdate = true;
+        this.isColliding = false;
 
         //Main Sprite
         this.sprite = createSprite(this.xx, this.yy, this.ww, this.hh);
@@ -34,7 +37,7 @@ class Player {
     //Sprite Functions
     Draw() {
         if (this.visible) {
-            drawSprite(this.sprite);
+            rect(this.xx, this.yy, this.ww, this.hh)
         }
     }
 
@@ -44,7 +47,11 @@ class Player {
                 this.state = "IdleState";
             }
 
+            
+
             this[this.state]();
+
+            
         }
     }
 
@@ -61,28 +68,57 @@ class Player {
 
     MoveState() {
         DEBUG && console.log(`Player State: ${this.state}`);
+        if (keyIsDown(W_KEY)) {
+            this.directionY = -1;
+            this.directionX = 0;
+        }
+        if (keyIsDown(A_KEY)) {
+            this.directionX = -1;
+            this.directionY = 0;
+        }
+        if (keyIsDown(S_KEY)) {
+            this.directionY = 1;
+            this.directionX = 0;
+        }
+        if (keyIsDown(D_KEY)) {
+            this.directionX = 1;
+            this.directionY = 0;
+            
+        }
+        if (keyIsDown(D_KEY)) {
+            this.directionX = 1;
+            this.directionY = 0;
+            
+        }
+        
+
+        if (keyIsDown(S_KEY) && keyIsDown(D_KEY)) {
+            this.directionX = 1;
+            this.directionY = 1;
+        }
+        if (keyIsDown(S_KEY) && keyIsDown(A_KEY)) {
+            this.directionX = -1;
+            this.directionY = 1;
+        }
+        if (keyIsDown(W_KEY) && keyIsDown(D_KEY)) {
+            this.directionX = 1;
+            this.directionY = -1;
+        }
+        if (keyIsDown(W_KEY) && keyIsDown(A_KEY)) {
+            this.directionX = -1;
+            this.directionY = -1;
+        }
+
+
+        this.yy = this.yy + this.playerSpeed * this.directionY;
+        this.xx = this.xx + this.playerSpeed * this.directionX;
     }
 
     // --------
 
     KeyPressed(KeyCode) {
         this.state = "MoveState";
-        switch (KeyCode) {
-            case W_KEY:
-                this.sprite.setSpeed(this.playerSpeed, FORWARD);
-                break;
-            case A_KEY:
-                this.sprite.setSpeed(this.playerSpeed, LEFT);
-                break;
-            case S_KEY:
-                this.sprite.setSpeed(this.playerSpeed, BACKWARDS);
-                break;
-            case D_KEY:
-                this.sprite.setSpeed(this.playerSpeed, RIGHT);
-                break;
-            default:
-                this.sprite.setSpeed(0, 0);
-        }
         DEBUG && console.log(`Key Pressed: ${KeyCode}`);
+        console.log(this.yy);
     }
 }

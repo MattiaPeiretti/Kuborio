@@ -3,11 +3,21 @@ const backgroundColor = 50;
 
 let playerLayer;
 let player;
+let world;
+let texturepack;
+
+function preload() {
+    texturepack = new Texturepack("test");
+    
+}
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
 
+    createCanvas(windowWidth, windowHeight);
     // *** layers ***
+
+    world = new World(texturepack);
+
     //Creating the main player layer
     playerLayer = new objLayer();
 
@@ -19,6 +29,7 @@ function setup() {
 }
 
 function draw() {
+    if (world.isLoaded) {
     StaticRender(); //For rendering backgrounds and static stuff
     FixedUpdate(); //Physics
     Update(); //Game Logic
@@ -26,12 +37,17 @@ function draw() {
     Render(); //Render the actual things
 
     // playerLayer.Draw();
+    }
+
+    
 }
 
 const FixedUpdate = () => {};
 
 const Update = () => {
+    world.checkCollisions();
     playerLayer.Update();
+    
 };
 
 const LateUpdate = () => {};
@@ -41,7 +57,7 @@ const Render = () => {
 };
 
 const StaticRender = () => {
-    background(backgroundColor);
+    world.Draw();
 };
 
 function keyPressed() {
