@@ -47,11 +47,12 @@ class Player {
                 this.state = "IdleState";
             }
 
+            if (keyIsDown(W_KEY) || keyIsDown(A_KEY) || keyIsDown(S_KEY) || keyIsDown(D_KEY)) {
+                this.state = "MoveState";
+            }
             
 
             this[this.state]();
-
-            
         }
     }
 
@@ -116,9 +117,4 @@ class Player {
 
     // --------
 
-    KeyPressed(KeyCode) {
-        this.state = "MoveState";
-        DEBUG && console.log(`Key Pressed: ${KeyCode}`);
-        console.log(this.yy);
-    }
 }

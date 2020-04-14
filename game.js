@@ -69,9 +69,6 @@ const game = new p5(() => {
         playerLayer.Draw();
     }
 
-    this.keyPressed = () =>  {
-        playerLayer.KeyPressed(keyCode);
-    }
 });
 
 
