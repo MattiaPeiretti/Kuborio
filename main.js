@@ -1,65 +1,77 @@
 const DEBUG = true;
 const backgroundColor = 50;
 
-let playerLayer;
-let player;
-let world;
-let texturepack;
+// let playerLayer;
+// let player;
+// let world;
+// let texturepack;
 
-function preload() {
-    texturepack = new Texturepack("test");
-    
-}
 
-function setup() {
+const game = new p5(() => {
 
-    createCanvas(windowWidth, windowHeight);
-    // *** layers ***
+    this.playerLayer = null;
+    this.player = null;
+    this.world = null;
+    this.texturepack = null;
 
-    world = new World(texturepack);
 
-    //Creating the main player layer
-    playerLayer = new objLayer();
 
-    //Creating the actual player
-    player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
-    this.state = "IdleState";
-    //player.visible = false;
-    player.canUpdate = true;
-}
+    this.preload = () => {
+        texturepack = new Texturepack("test");
+    } 
 
-function draw() {
-    if (world.isLoaded) {
-    StaticRender(); //For rendering backgrounds and static stuff
-    FixedUpdate(); //Physics
-    Update(); //Game Logic
-    LateUpdate(); //Late updates, after movement and such
-    Render(); //Render the actual things
+    this.setup = () => {
+        createCanvas(windowWidth, windowHeight);
+        // *** layers ***
 
-    // playerLayer.Draw();
+        this.world = new World(texturepack);
+
+        //Creating the main player layer
+        this.playerLayer = new objLayer();
+
+        //Creating the actual player
+        this.player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
+        //player.visible = false;
+        this.player.canUpdate = true;
     }
 
-    
-}
+    this.draw = () => {
+        if (world.isLoaded) {
+            this.StaticRender(); //For rendering backgrounds and static stuff
+            this.FixedUpdate(); //Physics
+            this.Update(); //Game Logic
+            this.LateUpdate(); //Late updates, after movement and such
+            this.Render(); //Render the actual things
+        
+            // playerLayer.Draw();
+            }
+    }
 
-const FixedUpdate = () => {};
 
-const Update = () => {
-    world.checkCollisions();
-    playerLayer.Update();
-    
-};
+    this.StaticRender = () => {
+        world.Draw();
+    }
 
-const LateUpdate = () => {};
+    this.FixedUpdate = () =>  {
 
-const Render = () => {
-    playerLayer.Draw();
-};
+    }
 
-const StaticRender = () => {
-    world.Draw();
-};
+    this.Update = () => {
+        world.checkCollisions();
+        playerLayer.Update();
+    }
 
-function keyPressed() {
-    playerLayer.KeyPressed(keyCode);
-}
+    this.LateUpdate= () =>  {
+
+    }
+
+    this.Render = () =>  {
+        playerLayer.Draw();
+    }
+
+    this.keyPressed = () =>  {
+        playerLayer.KeyPressed(keyCode);
+    }
+});
+
+
