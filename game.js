@@ -1,39 +1,41 @@
 const DEBUG = true;
 const backgroundColor = 50;
 
+let CANVAS_SIZE_W;
+let CANVAS_SIZE_H;
+
 // let playerLayer;
 // let player;
 // let world;
 // let texturepack;
 
-
 const game = new p5(() => {
-
+    //Constructor
     this.playerLayer = null;
     this.player = null;
     this.world = null;
     this.texturepack = null;
 
-
-
     this.preload = () => {
-        texturepack = new Texturepack("test");
-    } 
+        texturepack = new Texturepack("test"); //initializing texturepack
+    };
 
     this.setup = () => {
-        createCanvas(windowWidth, windowHeight);
-        // *** layers ***
+        CANVAS_SIZE_W = window.innerWidth;
+        CANVAS_SIZE_H = window.innerHeight;
+        createCanvas(CANVAS_SIZE_W, CANVAS_SIZE_H);
 
         this.world = new World(texturepack);
 
-        //Creating the main player layer
-        this.playerLayer = new objLayer();
+        // *** layers ***
+
+        this.playerLayer = new objLayer(); //Creating the main player layer
 
         //Creating the actual player
-        this.player = new Player(playerLayer, [50, 50], [20, 20], "IdleState");
+        this.player = new Player(playerLayer, [76, 76], [80, 80], "IdleState");
         //player.visible = false;
         this.player.canUpdate = true;
-    }
+    };
 
     this.draw = () => {
         if (world.isLoaded) {
@@ -42,33 +44,26 @@ const game = new p5(() => {
             this.Update(); //Game Logic
             this.LateUpdate(); //Late updates, after movement and such
             this.Render(); //Render the actual things
-        
-            // playerLayer.Draw();
-            }
-    }
 
+            // playerLayer.Draw();
+        }
+    };
 
     this.StaticRender = () => {
         world.Draw();
-    }
+    };
 
-    this.FixedUpdate = () =>  {
-
-    }
+    this.FixedUpdate = () => {};
 
     this.Update = () => {
         world.checkCollisions();
+        world.renderWindow();
         playerLayer.Update();
-    }
+    };
 
-    this.LateUpdate= () =>  {
+    this.LateUpdate = () => {};
 
-    }
-
-    this.Render = () =>  {
+    this.Render = () => {
         playerLayer.Draw();
-    }
-
+    };
 });
-
-

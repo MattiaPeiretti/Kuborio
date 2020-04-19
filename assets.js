@@ -1,4 +1,3 @@
-
 // Texturepacks
 
 // Consts
@@ -15,7 +14,6 @@ class Texturepack {
         this.name = null;
         this.assets = {};
         this.textures = [];
-        
     }
 
     load() {
