@@ -73,15 +73,9 @@ class Block {
         this.size = size;
     }
 
-    Draw() {
+    Draw(xx, yy) {
         noSmooth();
-        image(
-            this.tile,
-            this.xx * this.size,
-            this.yy * this.size,
-            this.size,
-            this.size
-        );
+        image(this.tile, xx, yy, this.size, this.size);
         smooth();
     }
 }
