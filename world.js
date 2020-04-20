@@ -14,16 +14,8 @@ class World {
         this.offsetX = 0;
         this.offsetY = 0;
 
-        // FIX THISSS
-
-        setTimeout(() => {
-            this.isLoaded = true;
-        }, 1000);
-
-        // ---------
-
         // Old map with Id system, which we kinda hate a lil bit, so it is not in use anymore...
-        // this.map = [
+        // this.mapData = [
         //     // 1  2  3  4  5  6  7  8  9  10
         //     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
         //     [2, 2, 2, 2, 0, 2, 2, 2, 2, 2],
@@ -38,8 +30,7 @@ class World {
         // ];
 
         //The test map with word ids..
-
-        this.map = [
+        this.mapData = [
             [
                 "Bedrock",
                 "Bedrock",
@@ -1007,65 +998,59 @@ class World {
                 "Bedrock",
             ],
         ];
+    }
 
-        this.blocks = {};
+    renderMap() {
+        let mapRow,
+            imgName,
+            currentTile,
+            newRow = [];
+
+        this.map = []; // Creating a empty final map
+        for (var i = 0; i < this.mapData.length; i++) {
+            mapRow = this.mapData[i]; //assigning the current row
+            for (var j = 0; j < mapRow.length; j++) {
+                imgName = mapRow[j] + "_texture"; // Assembling current texture name
+
+                // Checking if the texture actually exists
+                if (imgName in this.textures) {
+                    currentTile = this.textures[imgName];
+                } else {
+                    currentTile = this.Texturepack.undefinedTexture; // Assignning the undefined texture if needed
+                }
+
+                newRow.push(new Block(currentTile, [j, i], BLOCK_SIZE)); //Pushing newly created block in the current row
+            }
+
+            this.map.push(newRow); // Deplyoing the current row after adding all the blocks to it.
+            newRow = []; // Clearing the variable thereafter :)
+        }
+
+        this.isLoaded = true; // Flagginf that the world is loaded.
     }
 
     Draw() {
-        this.renderMap();
-    }
+        let currentBlock;
 
-    LoadMap(map) {
-        //read some json.. But that comes later ;)
-    }
-
-    // renderMap() {
-    //     background(255);
-    //     let tileImg, mapRow;
-
-    //     //DEBUG && console.log(`[${this.debugName}] Starting world render`);
-
-    //     if (this.textures) {
-    //         for (var i = 0; i < this.map.length; i++) {
-    //             mapRow = this.map[i];
-    //             for (var j = 0; j < mapRow.length; j++) {
-    //                 let imgName = mapRow[j] + "_texture";
-
-    //                 if (imgName in this.textures) {
-    //                     tileImg = this.textures[imgName];
-    //                 } else {
-    //                     tileImg = this.Texturepack.undefinedTexture;
-    //                 }
-
-    //                 noSmooth(); //Removing pixel interpolation
-    //                 image(
-    //                     tileImg,
-    //                     j * BLOCK_SIZE - this.offsetX,
-    //                     i * BLOCK_SIZE - this.offsetY,
-    //                     BLOCK_SIZE,
-    //                     BLOCK_SIZE
-    //                 );
-    //                 smooth();
-    //             }
-    //         }
-    //     }
-
-    //     //DEBUG && console.log(`[${this.debugName}] World rendered`);
-
-    //     this.isLoaded = true;
-    // }
-
-    renderMap() {
-        "Stone";
+        for (var i = 0; i < this.mapData.length; i++) {
+            for (var j = 0; j < this.mapData[i].length; j++) {
+                currentBlock = this.map[i][j]; // assigning current block
+                currentBlock.Draw(
+                    //calculating the position where the block should be displayed, subtracting the offsets
+                    j * currentBlock.size - this.offsetX,
+                    i * currentBlock.size - this.offsetY
+                );
+            }
+        }
     }
 
     checkCollisions() {
         let mapRow, blockX, blockY, currentBlock;
 
-        for (var i = 0; i < this.map.length; i++) {
-            mapRow = this.map[i];
+        for (var i = 0; i < this.mapData.length; i++) {
+            mapRow = this.mapData[i];
             for (var j = 0; j < mapRow.length; j++) {
-                currentBlock = this.map[i][j];
+                currentBlock = this.mapData[i][j];
 
                 blockX = j * BLOCK_SIZE - this.offsetX;
                 blockY = i * BLOCK_SIZE - this.offsetY;
