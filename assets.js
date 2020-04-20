@@ -70,13 +70,18 @@ class Block {
         this.tile = texture;
         this.xx = pos[0];
         this.yy = pos[1];
-        this.ww = size[0];
-        this.hh = size[1];
+        this.size = size;
     }
 
     Draw() {
         noSmooth();
-        image(this.tile, this.xx, this.yy, this.ww, this.hh);
+        image(
+            this.tile,
+            this.xx * this.size,
+            this.yy * this.size,
+            this.size,
+            this.size
+        );
         smooth();
     }
 }
