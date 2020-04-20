@@ -25,14 +25,17 @@ const game = new p5(() => {
         CANVAS_SIZE_H = window.innerHeight;
         createCanvas(CANVAS_SIZE_W, CANVAS_SIZE_H);
 
-        this.world = new World(texturepack);
+        this.world = new World(texturepack); //Creating the world instance
+        this.world.renderMap(); // Rendering and loading up the map
 
         // *** layers ***
-
         this.playerLayer = new objLayer(); //Creating the main player layer
 
-        //Creating the actual player
+        //Creating the player
         this.player = new Player(playerLayer, [76, 76], [80, 80], "IdleState");
+
+        // Messing around with some player props :)
+
         //player.visible = false;
         this.player.canUpdate = true;
     };
