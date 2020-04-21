@@ -1019,7 +1019,9 @@ class World {
                     currentTile = this.Texturepack.undefinedTexture; // Assignning the undefined texture if needed
                 }
 
-                newRow.push(new Block(currentTile, [j, i], BLOCK_SIZE)); //Pushing newly created block in the current row
+                newRow.push(
+                    new Block(mapRow[j], currentTile, [j, i], BLOCK_SIZE)
+                ); //Pushing newly created block in the current row
             }
 
             this.map.push(newRow); // Deplyoing the current row after adding all the blocks to it.
@@ -1040,33 +1042,6 @@ class World {
                     j * currentBlock.size - this.offsetX,
                     i * currentBlock.size - this.offsetY
                 );
-            }
-        }
-    }
-
-    checkCollisions() {
-        let mapRow, blockX, blockY, currentBlock;
-
-        for (var i = 0; i < this.mapData.length; i++) {
-            mapRow = this.mapData[i];
-            for (var j = 0; j < mapRow.length; j++) {
-                currentBlock = this.mapData[i][j];
-
-                blockX = j * BLOCK_SIZE - this.offsetX;
-                blockY = i * BLOCK_SIZE - this.offsetY;
-
-                if (
-                    player.xx < blockX + BLOCK_SIZE &&
-                    player.xx + player.ww > blockX &&
-                    player.yy < blockY + BLOCK_SIZE &&
-                    player.yy + player.hh > blockY
-                ) {
-                    if (currentBlock == "Stone" || currentBlock == "Bedrock") {
-                        player.state = "IdleState";
-                        player.xx = player.xx + 10 * (player.directionX * -1);
-                        player.yy = player.yy + 10 * (player.directionY * -1);
-                    }
-                }
             }
         }
     }
@@ -1097,5 +1072,9 @@ class World {
         if (this.offsetY < 0) {
             this.offsetY = 0;
         }
+    }
+
+    getOffset() {
+        return [this.offsetX, this.offsetY];
     }
 }

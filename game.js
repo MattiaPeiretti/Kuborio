@@ -1,5 +1,4 @@
 const DEBUG = true;
-const backgroundColor = 50;
 
 let CANVAS_SIZE_W;
 let CANVAS_SIZE_H;
@@ -15,6 +14,7 @@ const game = new p5(() => {
     this.player = null;
     this.world = null;
     this.texturepack = null;
+    this.collisionHandler = null;
 
     this.preload = () => {
         texturepack = new Texturepack("test"); //initializing texturepack
@@ -32,12 +32,19 @@ const game = new p5(() => {
         this.playerLayer = new objLayer(); //Creating the main player layer
 
         //Creating the player
-        this.player = new Player(playerLayer, [76, 76], [80, 80], "IdleState");
+        this.player = new Player(
+            playerLayer,
+            [200, 200],
+            [80, 80],
+            "IdleState"
+        );
 
         // Messing around with some player props :)
 
         //player.visible = false;
         this.player.canUpdate = true;
+
+        this.collisionHandler = new collisionHandler(this.world.map);
     };
 
     this.draw = () => {
@@ -59,7 +66,10 @@ const game = new p5(() => {
     this.FixedUpdate = () => {};
 
     this.Update = () => {
-        world.checkCollisions();
+        this.collisionHandler.checkCollisions(
+            this.playerLayer,
+            world.getOffset()
+        );
         world.renderWindow();
         playerLayer.Update();
     };

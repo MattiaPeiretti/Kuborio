@@ -66,7 +66,8 @@ class Texturepack {
 //Default block Class
 
 class Block {
-    constructor(texture, pos, size) {
+    constructor(id, texture, pos, size) {
+        this.id = id;
         this.tile = texture;
         this.xx = pos[0];
         this.yy = pos[1];
