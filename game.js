@@ -35,7 +35,7 @@ const game = new p5(() => {
         this.player = new Player(
             playerLayer,
             [200, 200],
-            [80, 80],
+            [52, 80], //Image ratio is 32:21, namely 1.52
             "IdleState"
         );
 
