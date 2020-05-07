@@ -1045,36 +1045,4 @@ class World {
             }
         }
     }
-
-    renderWindow() {
-        const PADDING_RANGE = BLOCK_SIZE;
-        const OFFSET_UPDATE = 6.4;
-
-        if (player.xx > CANVAS_SIZE_W - PADDING_RANGE - player.ww) {
-            this.offsetX += OFFSET_UPDATE;
-            player.xx = CANVAS_SIZE_W - PADDING_RANGE - player.ww;
-        }
-        if (player.xx < PADDING_RANGE) {
-            this.offsetX -= OFFSET_UPDATE;
-            player.xx = PADDING_RANGE;
-        }
-        if (player.yy > CANVAS_SIZE_H - PADDING_RANGE - player.hh) {
-            this.offsetY += OFFSET_UPDATE;
-            player.yy = CANVAS_SIZE_H - PADDING_RANGE - player.hh;
-        }
-        if (player.yy < PADDING_RANGE) {
-            this.offsetY -= OFFSET_UPDATE;
-            player.yy = PADDING_RANGE;
-        }
-        if (this.offsetX < 0) {
-            this.offsetX = 0;
-        }
-        if (this.offsetY < 0) {
-            this.offsetY = 0;
-        }
-    }
-
-    getOffset() {
-        return [this.offsetX, this.offsetY];
-    }
 }
