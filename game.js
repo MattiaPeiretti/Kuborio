@@ -15,6 +15,7 @@ const game = new p5(() => {
     this.world = null;
     this.texturepack = null;
     this.collisionHandler = null;
+    this.camera = null;
 
     this.preload = () => {
         texturepack = new Texturepack("test"); //initializing texturepack
@@ -45,6 +46,8 @@ const game = new p5(() => {
         this.player.canUpdate = true;
 
         this.collisionHandler = new collisionHandler(this.world.map);
+
+        this.Camera = new Camera(this.player, this.world.map);
     };
 
     this.draw = () => {
@@ -60,7 +63,8 @@ const game = new p5(() => {
     };
 
     this.StaticRender = () => {
-        world.Draw();
+        this.Camera.render();
+        this.Camera.vision.Draw();
     };
 
     this.FixedUpdate = () => {};
@@ -68,9 +72,9 @@ const game = new p5(() => {
     this.Update = () => {
         this.collisionHandler.checkCollisions(
             this.playerLayer,
-            world.getOffset()
+            this.Camera.getOffset()
         );
-        world.renderWindow();
+
         playerLayer.Update();
     };
 
