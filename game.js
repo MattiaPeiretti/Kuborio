@@ -3,11 +3,6 @@ const DEBUG = true;
 let CANVAS_SIZE_W;
 let CANVAS_SIZE_H;
 
-// let playerLayer;
-// let player;
-// let world;
-// let texturepack;
-
 const game = new p5(() => {
     //Constructor
     this.playerLayer = null;
@@ -26,8 +21,8 @@ const game = new p5(() => {
         CANVAS_SIZE_H = window.innerHeight;
         createCanvas(CANVAS_SIZE_W, CANVAS_SIZE_H);
 
-        this.world = new World(texturepack); //Creating the world instance
-        this.world.renderMap(); // Rendering and loading up the map
+        this.world = new World(texturepack); //Creating the world
+        this.world.renderMap(); // Rendering the map
 
         // *** layers ***
         this.playerLayer = new objLayer(); //Creating the main player layer
@@ -40,14 +35,9 @@ const game = new p5(() => {
             "IdleState"
         );
 
-        // Messing around with some player props :)
+        this.collisionHandler = new collisionHandler(this.world.map); //Creating a collision handler
 
-        //player.visible = false;
-        this.player.canUpdate = true;
-
-        this.collisionHandler = new collisionHandler(this.world.map);
-
-        this.Camera = new Camera(this.player, this.world.map);
+        this.Camera = new Camera(this.player, this.world.map); //Creating a camera that will follow the player
     };
 
     this.draw = () => {
@@ -57,14 +47,13 @@ const game = new p5(() => {
             this.Update(); //Game Logic
             this.LateUpdate(); //Late updates, after movement and such
             this.Render(); //Render the actual things
-
-            // playerLayer.Draw();
         }
     };
 
     this.StaticRender = () => {
+        //Displaying the world
         this.Camera.render();
-        this.Camera.vision.Draw();
+        this.Camera.vision.Draw(); //Drawind what the camera has rendered
     };
 
     this.FixedUpdate = () => {};
@@ -73,14 +62,14 @@ const game = new p5(() => {
         this.collisionHandler.checkCollisions(
             this.playerLayer,
             this.Camera.getOffset()
-        );
+        ); //Checking for collisions
 
-        playerLayer.Update();
+        playerLayer.Update(); //Updating player
     };
 
     this.LateUpdate = () => {};
 
     this.Render = () => {
-        playerLayer.Draw();
+        playerLayer.Draw(); //Drawing Player
     };
 });

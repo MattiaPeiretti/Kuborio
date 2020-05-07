@@ -1,11 +1,16 @@
+//Class Camera, takes care of showing a precise portion of the world,
+//The class itself is more about the rendering of the offset, the subclass of the camera
+// Vision, worrys about displaing the would itself rendering and drawing the tiles...
 class Camera {
     constructor(target, world) {
-        this.world = world;
-        this.target = target;
+        this.world = world; //where the camera is located
+        this.target = target; // what the camera follows
 
+        //The offsets
         this.offsetX = 0;
         this.offsetY = 0;
 
+        //Initialization of an instance of the vision class
         this.vision = new Vision(this.world);
     }
 
@@ -13,6 +18,7 @@ class Camera {
         const PADDING_RANGE = BLOCK_SIZE;
         const OFFSET_UPDATE = 6.4;
 
+        //Checking when the target is colliding with the margin, if so augmenting the offset of the following direcction...
         if (this.target.xx > CANVAS_SIZE_W - PADDING_RANGE - this.target.ww) {
             this.offsetX += OFFSET_UPDATE;
             this.target.xx = CANVAS_SIZE_W - PADDING_RANGE - this.target.ww;
@@ -29,6 +35,8 @@ class Camera {
             this.offsetY -= OFFSET_UPDATE;
             this.target.yy = PADDING_RANGE;
         }
+
+        //Setting the offsets to 0 if negative ( Just to avoid wierd stuff to happen ;) )
         if (this.offsetX < 0) {
             this.offsetX = 0;
         }
@@ -36,6 +44,7 @@ class Camera {
             this.offsetY = 0;
         }
 
+        //Updating the offset in the Vision Class
         this.vision.updateOffset(this.offsetX, this.offsetY);
     }
 
@@ -46,7 +55,9 @@ class Camera {
 
 class Vision {
     constructor(baseMap) {
-        this.map = baseMap;
+        this.map = baseMap; //Where the vision is located
+
+        //The offsets
         this.offsetX = 0;
         this.offsetY = 0;
     }
@@ -61,13 +72,12 @@ class Vision {
     }
 
     Draw() {
-        console.log(this.offsetX, this.offsetY);
-
         let currentBlock;
 
         for (var i = 0; i < this.map.length; i++) {
             for (var j = 0; j < this.map[i].length; j++) {
-                currentBlock = this.map[i][j]; // assigning current block
+                //Setting the variable currentBLock as
+                currentBlock = this.map[i][j]; // assigning current block in the loop to a handier variable.
 
                 currentBlock.Draw(
                     //calculating the position where the block should be displayed, subtracting the offsets
