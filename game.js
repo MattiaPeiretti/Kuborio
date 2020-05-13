@@ -17,8 +17,7 @@ const game = new p5(() => {
     };
 
     this.setup = () => {
-        CANVAS_SIZE_W = window.innerWidth;
-        CANVAS_SIZE_H = window.innerHeight;
+        setWindowSize(window.innerWidth, window.innerHeight);
         createCanvas(CANVAS_SIZE_W, CANVAS_SIZE_H);
 
         this.world = new World(texturepack); //Creating the world
@@ -41,6 +40,13 @@ const game = new p5(() => {
     };
 
     this.draw = () => {
+        window.addEventListener(
+            "resize",
+            setWindowSize(window.innerWidth, window.innerHeight)
+        );
+
+        background(51);
+
         if (world.isLoaded) {
             this.StaticRender(); //For rendering backgrounds and static stuff
             this.FixedUpdate(); //Physics
@@ -73,3 +79,9 @@ const game = new p5(() => {
         playerLayer.Draw(); //Drawing Player
     };
 });
+
+function setWindowSize(w, h) {
+    CANVAS_SIZE_W = w;
+    CANVAS_SIZE_H = h;
+    resizeCanvas(w, h);
+}
